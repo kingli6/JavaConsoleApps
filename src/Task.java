@@ -12,6 +12,10 @@ public class Task {
         return isCompleted;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setCompleted(boolean completed) {
         this.isCompleted = completed;
     }

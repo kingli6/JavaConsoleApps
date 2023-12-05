@@ -8,6 +8,10 @@ public class ToDoList {
         this.tasks = new ArrayList<>(); // Constructor
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
     public void addTask(String description) {
         Task task = new Task(description); // Method that uses class-Task boiler plate to store String into the
                                            // list-array HERE. //using the constructor!
