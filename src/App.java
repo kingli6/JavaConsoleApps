@@ -1,9 +1,9 @@
 import java.io.*;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class App {
+    private static final String FILE_PATH = "Tasks.txt";
+
     public static void main(String[] args) throws Exception {
         System.out.println("\nHello, User!\n");
         ToDoList toDoList = new ToDoList();
@@ -61,19 +61,21 @@ public class App {
     }
 
     private static void loadTasksFromFile(ToDoList toDoList) {
-        try (Scanner fileScanner = new Scanner(new File("tasks.txt"))) {
-            while (fileScanner.hasNextLine()) {
-                String description = fileScanner.nextLine();
-                toDoList.addTask(description);
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = fileReader.readLine()) != null) {
+                toDoList.addTask(line);
             }
         } catch (IOException e) {
+            e.printStackTrace(); // Print the stack trace for detailed information
             // Handle file not found or other IO exceptions
-            System.out.println("Could not load tasks from file. Starting with an empty list.");
+            System.out.println("Could not load tasks from file. Error: " + e.getMessage());
+            System.out.println("Starting with an empty list.");
         }
     }
 
     private static void saveTasksToFile(ToDoList toDoList) {
-        try (FileWriter fileWriter = new FileWriter("tasks.txt")) {
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Task task : toDoList.getTasks()) {
                 fileWriter.write(task.getDescription() + "\n");
             }
