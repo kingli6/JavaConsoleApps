@@ -11,7 +11,7 @@ public class App {
                 4nineeightseven2
                 zoneight234
                 7pqrstsixteen
-                """;sdfsf
+                """;
 
         String[] lines = text.split("\\R");
 
@@ -30,35 +30,44 @@ public class App {
         // Process each line
         for (String line : lines) {
             System.out.println("Line: " + line);
-            processLine(line, numberWords);
+            LineInfo lineInfo = processLine(line, numberWords);
+            System.out.println(lineInfo);
+            System.out.println("Converted Digit: " + lineInfo.convertWordToDigit());
             System.out.println(); // Add a newline for better readability
         }
     }
 
-    public static void processLine(String input, Map<String, Integer> numberWords) {
+    public static LineInfo processLine(String input, Map<String, Integer> numberWords) {
         // Variables to store digit and word information
+        int digit = -1;
         int digitIndex = -1;
+        String wordKey = null;
         int wordIndex = -1;
+
+        // Initialize digitIndex to the current index
+        digitIndex = 0;
 
         for (int i = 0; i < input.length(); i++) {
             // Check for digits 1-9
             if (Character.isDigit(input.charAt(i))) {
-                int digit = Character.getNumericValue(input.charAt(i));
+                digit = Character.getNumericValue(input.charAt(i));
                 digitIndex = i;
-                System.out.println("Digit: " + digit + " at index: " + digitIndex);
             }
             // Check for number words one-nine
             else {
-                for (String wordKey : numberWords.keySet()) {
-                    int endIndex = i + numberWords.get(wordKey);
+                for (String word : numberWords.keySet()) {
+                    int endIndex = i + numberWords.get(word);
                     if (endIndex <= input.length()
-                            && input.regionMatches(true, i, wordKey, 0, numberWords.get(wordKey))) {
+                            && input.regionMatches(true, i, word, 0, numberWords.get(word))) {
+                        wordKey = word;
                         wordIndex = i;
-                        System.out.println("Word: " + wordKey + " starting at index: " + wordIndex);
                         break; // Break to avoid overlapping matches
                     }
                 }
             }
         }
+
+        LineInfo lineInfo = new LineInfo(digit, digitIndex, wordKey, wordIndex);
+        return lineInfo;
     }
 }
