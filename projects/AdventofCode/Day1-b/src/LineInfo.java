@@ -4,18 +4,24 @@ import java.util.List;
 public class LineInfo {
     private List<Integer> digits;
     private List<String> words;
+    private List<Integer> digitIndices;
+    private List<Integer> wordIndices;
 
     public LineInfo() {
         this.digits = new ArrayList<>();
         this.words = new ArrayList<>();
+        this.digitIndices = new ArrayList<>();
+        this.wordIndices = new ArrayList<>();
     }
 
-    public void addDigit(int digit) {
+    public void addDigit(int digit, int index) {
         digits.add(digit);
+        digitIndices.add(index);
     }
 
-    public void addWord(String word) {
+    public void addWord(String word, int index) {
         words.add(word);
+        wordIndices.add(index);
     }
 
     public List<Integer> getDigits() {
@@ -24,6 +30,14 @@ public class LineInfo {
 
     public List<String> getWords() {
         return words;
+    }
+
+    public List<Integer> getDigitIndices() {
+        return digitIndices;
+    }
+
+    public List<Integer> getWordIndices() {
+        return wordIndices;
     }
 
     public String convertWordToDigit() {
@@ -47,6 +61,7 @@ public class LineInfo {
 
     @Override
     public String toString() {
-        return "Digits: " + digits + "\nWords: " + words;
+        return "Digits: " + digits + "\nWords: " + words + "\nDigit Indices: " + digitIndices + "\nWord Indices: "
+                + wordIndices;
     }
 }

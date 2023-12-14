@@ -44,7 +44,7 @@ public class App {
             // Check for digits 1-9
             if (Character.isDigit(input.charAt(i))) {
                 int digit = Character.getNumericValue(input.charAt(i));
-                lineInfo.addDigit(digit);
+                lineInfo.addDigit(digit, i);
             }
             // Check for number words one-nine
             else {
@@ -52,7 +52,7 @@ public class App {
                     int endIndex = i + numberWords.get(word);
                     if (endIndex <= input.length()
                             && input.regionMatches(true, i, word, 0, numberWords.get(word))) {
-                        lineInfo.addWord(word);
+                        lineInfo.addWord(word, i);
                         break; // Break to avoid overlapping matches
                     }
                 }
@@ -61,5 +61,4 @@ public class App {
 
         return lineInfo;
     }
-
 }
