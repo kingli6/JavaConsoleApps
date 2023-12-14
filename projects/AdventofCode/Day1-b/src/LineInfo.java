@@ -1,59 +1,52 @@
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LineInfo {
-    private int digit;
-    private int digitIndex;
-    private String wordKey;
-    private int wordIndex;
+    private List<Integer> digits;
+    private List<String> words;
 
-    // Constructor
-    public LineInfo(int digit, int digitIndex, String wordKey, int wordIndex) {
-        this.digit = digit;
-        this.digitIndex = digitIndex;
-        this.wordKey = wordKey;
-        this.wordIndex = wordIndex;
+    public LineInfo() {
+        this.digits = new ArrayList<>();
+        this.words = new ArrayList<>();
     }
 
-    // Getters
-    public int getDigit() {
-        return digit;
+    public void addDigit(int digit) {
+        digits.add(digit);
     }
 
-    public int getDigitIndex() {
-        return digitIndex;
+    public void addWord(String word) {
+        words.add(word);
     }
 
-    public String getWordKey() {
-        return wordKey;
+    public List<Integer> getDigits() {
+        return digits;
     }
 
-    public int getWordIndex() {
-        return wordIndex;
+    public List<String> getWords() {
+        return words;
     }
 
-    // Convert word to digit and return the combined result
-    public int convertWordToDigit() {
-        Map<String, Integer> wordToDigitMap = Map.of(
-                "one", 1,
-                "two", 2,
-                "three", 3,
-                "four", 4,
-                "five", 5,
-                "six", 6,
-                "seven", 7,
-                "eight", 8,
-                "nine", 9);
-
-        if (wordKey != null) {
-            return wordToDigitMap.getOrDefault(wordKey, -1);
+    public String convertWordToDigit() {
+        StringBuilder result = new StringBuilder();
+        for (String word : words) {
+            switch (word.toLowerCase()) {
+                case "one" -> result.append("1");
+                case "two" -> result.append("2");
+                case "three" -> result.append("3");
+                case "four" -> result.append("4");
+                case "five" -> result.append("5");
+                case "six" -> result.append("6");
+                case "seven" -> result.append("7");
+                case "eight" -> result.append("8");
+                case "nine" -> result.append("9");
+                default -> throw new IllegalArgumentException("Unexpected value: " + word);
+            }
         }
-
-        return -1;
+        return result.toString();
     }
 
     @Override
     public String toString() {
-        return "Digit: " + digit + " at index: " + digitIndex +
-                ", Word: " + wordKey + " starting at index: " + wordIndex;
+        return "Digits: " + digits + "\nWords: " + words;
     }
 }

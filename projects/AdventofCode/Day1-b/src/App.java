@@ -38,20 +38,13 @@ public class App {
     }
 
     public static LineInfo processLine(String input, Map<String, Integer> numberWords) {
-        // Variables to store digit and word information
-        int digit = -1;
-        int digitIndex = -1;
-        String wordKey = null;
-        int wordIndex = -1;
-
-        // Initialize digitIndex to the current index
-        digitIndex = 0;
+        LineInfo lineInfo = new LineInfo();
 
         for (int i = 0; i < input.length(); i++) {
             // Check for digits 1-9
             if (Character.isDigit(input.charAt(i))) {
-                digit = Character.getNumericValue(input.charAt(i));
-                digitIndex = i;
+                int digit = Character.getNumericValue(input.charAt(i));
+                lineInfo.addDigit(digit);
             }
             // Check for number words one-nine
             else {
@@ -59,15 +52,14 @@ public class App {
                     int endIndex = i + numberWords.get(word);
                     if (endIndex <= input.length()
                             && input.regionMatches(true, i, word, 0, numberWords.get(word))) {
-                        wordKey = word;
-                        wordIndex = i;
+                        lineInfo.addWord(word);
                         break; // Break to avoid overlapping matches
                     }
                 }
             }
         }
 
-        LineInfo lineInfo = new LineInfo(digit, digitIndex, wordKey, wordIndex);
         return lineInfo;
     }
+
 }
